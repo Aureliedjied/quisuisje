@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+	<div class="flex items-center justify-center h-screen">
+		<div class="bg-white rounded-lg p-8 max-w-md w-full">
+			<h1 class="text-center text-3xl font-semibold mb-6 text-black">Inscription</h1>
+			<form action="{{ path('app_register') }}" method="post">
+				{{ form_start(form) }}
+
+				<div class="mb-4">
+					{{ form_label(form.email, 'Email', {'label_attr': {'class': 'block text-gray-600 text-sm font-medium mb-1'}}) }}
+					{{ form_widget(form.email, {'attr': {'class': 'w-full px-3 py-2 border rounded-md text-black focus:outline-none focus:border-blue-500', 'placeholder': 'Aurelie@bao.com'}}) }}
+				</div>
+
+				<div class="mb-4">
+					{{ form_label(form.pseudo, 'Pseudo', {'label_attr': {'class': 'block text-gray-600 text-sm font-medium mb-1'}}) }}
+					{{ form_widget(form.pseudo, {'attr': {'class': 'w-full px-3 py-2 border rounded-md text-black focus:outline-none focus:border-blue-500', 'placeholder': 'Votre pseudo'}}) }}
+				</div>
+
+				<div class="mb-4">
+					{{ form_label(form.password.first, 'Mot de passe', {'label_attr': {'class': 'block text-gray-600 text-sm font-medium mb-1'}}) }}
+					{{ form_widget(form.password.first, {'attr': {'class': 'w-full px-3 py-2 border rounded-md text-black focus:outline-none focus:border-blue-500'}}) }}
+				</div>
+
+				<div class="mb-4">
+					{{ form_label(form.password.second, 'Répétez le mot de passe', {'label_attr': {'class': 'block text-gray-600 text-sm font-medium mb-1'}}) }}
+					{{ form_widget(form.password.second, {'attr': {'class': 'w-full px-3 py-2 border rounded-md text-black focus:outline-none focus:border-blue-500'}}) }}
+				</div>
+
+				<button type="submit" class="w-full bg-cream text-black py-2 px-4 rounded-full hover:bg-cream-dark hover:text-white focus:outline-none focus:border-cream focus:ring focus:ring-cream">
+					Inscription
+				</button>
+
+				{{ form_end(form) }}
+
+				<p class="text-gray-600 text-center mt-4">Vous avez déjà un compte ?
+					<a href="{{ path('app_security_login') }}" class="text-blue-500">Connectez-vous ici</a>.</p>
+			</form>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue !
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center text-4xl font-bold mb-4">
+		<span class="rainbow-text">QUIZZ COFFEE</span>
+	</h1>
+	<div class="flex items-center justify-center h-screen">
+		<div class="bg-white rounded-lg p-8 max-w-md w-full">
+			<p class="text-black font-medium mb-2">Question 1: Quelle est la principale substance stimulante présente dans le café ?</p>
+			<div class="ml-4">
+				<label class="flex items-center mb-2 label-option">
+					<input type="radio" id="q1_option1" name="q1" class="mr-2">
+					<span class="bg-coffee-light py-1 px-2 rounded-md">Réponse A</span>
+				</label>
+				<label class="flex items-center mb-2 label-option">
+					<input type="radio" id="q1_option2" name="q1" class="mr-2">
+					<span class="bg-cream py-1 px-2 rounded-md">Réponse B</span>
+				</label>
+				<label class="flex items-center mb-2 label-option">
+					<input type="radio" id="q1_option3" name="q1" class="mr-2">
+					<span class="bg-chocolate py-1 px-2 rounded-md">Réponse C</span>
+				</label>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

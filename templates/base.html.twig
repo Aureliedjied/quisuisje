@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Bienvenue !
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+	</head>
+	<body
+		class="bg-gray-900 text-white">
+
+		<!-- base.html.twig -->
+
+		<nav class="flex p-4">
+			<div class="flex items-center space-x-4">
+				<a href="{{ path('app_home') }}" class="hover:text-blue-500">Accueil</a>
+				<a href="#" class="hover:text-blue-500">Forum</a>
+			</div>
+
+			<div class="ml-auto flex items-center space-x-4">
+				{% if app.user %}
+					{# L'utilisateur est connecté, affichez le lien de déconnexion #}
+					<a href="{{ path('app_security_logout') }}" class="hover:text-blue-500">Se déconnecter</a>
+				{% else %}
+					{# L'utilisateur n'est pas connecté, affichez le lien de connexion #}
+					<a href="{{ path('app_security_login') }}" class="hover:text-blue-500">Se connecter</a>
+				{% endif %}
+				<a href="{{ path('app_register') }}" class="hover:text-blue-500">S'inscrire</a>
+			</div>
+		</nav>
+
+		{% block body %}{% endblock %}
+
+		<footer></footer>
+	</body>
+</html>

@@ -1,0 +1,48 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+    background-color: #4299e1;
+  }
+
+  @keyframes rainbow {
+    0% {
+        color: #ff0000;
+    }
+    16.666% {
+        color: #ff8000;
+    }
+    33.333% {
+        color: #ffff00;
+    }
+    50% {
+        color: #80ff00;
+    }
+    66.666% {
+        color: #00ff80;
+    }
+    83.333% {
+        color: #0080ff;
+    }
+    100% {
+        color: #8000ff;
+    }
+}
+
+.rainbow-text {
+    animation: rainbow 3s infinite;
+}
+
+.label-option:nth-child(1) span {
+  background-color: #ffeeaa; 
+}
+
+.label-option:nth-child(2) span {
+  background-color: #3a443e; 
+}
+
+.label-option:nth-child(3) span {
+  background-color: #ffccaa; 
+}
+
