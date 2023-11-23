@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="This email is already in use")
+ * @UniqueEntity(fields={"email"}, message="Cet email existe déjà")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -25,9 +25,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
-    private $pseudo;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,6 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $roles = [];
 
     /**
+     * @ORM\OneToMany(targetEntity=Topic::class, mappedBy="author")
+     */
+    private $topics;
+
+    /**
      * @ORM\OneToMany(targetEntity=Vote::class, mappedBy="voter")
      */
     private $votes;
@@ -56,8 +61,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reactions;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Presentation::class, mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $presentation;
+
+
+
     public function __construct()
     {
+        $this->topics = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->reactions = new ArrayCollection();
     }
@@ -68,14 +81,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getPseudo(): ?string
+    public function getname(): ?string
     {
-        return $this->pseudo;
+        return $this->name;
     }
 
-    public function setPseudo(string $pseudo): self
+    public function setname(string $name): self
     {
-        $this->pseudo = $pseudo;
+        $this->name = $name;
 
         return $this;
     }
@@ -166,6 +179,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @return Collection|Topic[]
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topic $topic): self
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics[] = $topic;
+            $topic->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topic $topic): self
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getAuthor() === $this) {
+                $topic->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Vote>
      */
     public function getVotes(): Collection
@@ -221,6 +264,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $reaction->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPresentation(): ?Presentation
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?Presentation $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

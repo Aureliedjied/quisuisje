@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\TopicRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +22,9 @@ class Topic
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank
+     * @Assert\Length(max = 100)
      */
     private $title;
 
@@ -28,6 +32,12 @@ class Topic
      * @ORM\Column(type="text")
      */
     private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="topics")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -111,6 +121,26 @@ class Topic
                 $reaction->setTopic(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of author
+     */ 
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Set the value of author
+     *
+     * @return  self
+     */ 
+    public function setAuthor($author)
+    {
+        $this->author = $author;
 
         return $this;
     }

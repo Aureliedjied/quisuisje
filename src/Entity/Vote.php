@@ -39,7 +39,7 @@ class Vote
      */
     private $riddle;
 
-    // ... Les méthodes d'accès et de modification
+
 
     public function getId(): ?int
     {
