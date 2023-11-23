@@ -40,13 +40,14 @@ class Riddle
     private $hint2;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      */
-    private $chance;
+    private $solved = false;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
+    * @ORM\ManyToOne(targetEntity=User::class, inversedBy="riddles", cascade={"persist"})
+    * @ORM\JoinColumn(nullable=false)
+    */
     private $author;
 
     /**
@@ -118,16 +119,27 @@ class Riddle
         return $this;
     }
 
-    public function getChance(): ?int
+    public function isSolved(): ?bool
     {
-        return $this->chance;
+        return $this->solved;
     }
 
-    public function setChance(int $chance): self
-    {
-        $this->chance = $chance;
 
-        return $this;
+    /**
+     * @param string $userAnswer
+     * @return bool true if the answer is correct, false otherwise
+     */
+    public function checkAnswer(string $userAnswer): bool
+    {
+        $correctAnswer = strtolower($this->answer);
+        $userInput = strtolower($userAnswer);
+
+        if ($correctAnswer === $userInput) {
+            $this->solved = true;
+            return true;
+        }
+
+        return false;
     }
 
     public function getAuthor(): ?string
@@ -135,10 +147,9 @@ class Riddle
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
-
         return $this;
     }
 

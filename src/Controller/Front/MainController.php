@@ -16,18 +16,6 @@ class MainController extends AbstractController
         return $this->render('main/home.html.twig');
     }
 
-
-    /**
-     * @Route("/tuto", name="app_tuto")
-     */
-    public function rulesTuto(): Response
-    {
-        return $this->render('main/tutorial.html.twig');
-    }
-
-
-
-
     /**
      * @Route("/quizz", name="app_quizz")
      */

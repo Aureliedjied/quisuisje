@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
             $manager->persist($presentation);
         }
 
-        // Création des sujets fictifs associés aux utilisateurs
+        // Création de topics
         foreach ($users as $user) {
             for ($i = 0; $i < 3; $i++) {
                 $topic = new Topic();
@@ -50,40 +50,18 @@ class AppFixtures extends Fixture
             }
         }
 
-        // Création des commentaires fictifs associés aux devinettes
-        $riddles = $manager->getRepository(Riddle::class)->findAll();
-        foreach ($riddles as $riddle) {
-            for ($i = 0; $i < 3; $i++) {
-                $comment = new Comment();
-                $comment->setContent($faker->realText());
-                $comment->setAuthor($faker->userName);
-                $comment->setRiddle($riddle);
-                $manager->persist($comment);
+        // Creations de devinettes
+        $riddles = [];
+            for ($i = 0; $i < 5; $i++) {
+                $riddle = new Riddle();
+                $riddle->setQuestion($faker->sentence);
+                $riddle->setAnswer($faker->word);
+                $riddle->setHint1($faker->word);
+                $riddle->setHint2($faker->word);
+                $riddle->setAuthor($user);
+                $riddles[] = $riddle;
+                $manager->persist($riddle);
             }
-        }
-
-        // Création des votes fictifs associés aux utilisateurs et aux devinettes
-        foreach ($users as $user) {
-            foreach ($riddles as $riddle) {
-                $vote = new Vote();
-                $vote->setValue(rand(1, 5)); 
-                $vote->setVoter($user);
-                $vote->setRiddle($riddle);
-                $manager->persist($vote);
-            }
-        }
-
-        // Création des réactions fictives associées aux utilisateurs et aux sujets
-        $topics = $manager->getRepository(Topic::class)->findAll();
-        foreach ($users as $user) {
-            foreach ($topics as $topic) {
-                $reaction = new Reaction();
-                $reaction->setUser($user);
-                $reaction->setTopic($topic);
-                $reaction->setEmoji('👍'); 
-                $manager->persist($reaction);
-            }
-        }
 
         $manager->flush();
     }
