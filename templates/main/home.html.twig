@@ -7,14 +7,18 @@
 	<h1 class="text-center text-4xl font-bold mb-4 text-cream-dark">
 		Bienvenue sur le site !
 	</h1>
-
-	<div class="flex flex-col items-center justify-center h-screen">
-		<div class="bg-white rounded-full p-4">
+	<div class="flex flex-col items-center justify-center h-screen space-y-8">
+		<div class="bg-white rounded-full p-4 shadow-md">
 			<img src="{{ asset('images/bao.png') }}" alt="logo bao">
-			<a href="{{ path('app_tuto') }}" class="bg-blue-500 text-white rounded-full px-4 py-2 hover:bg-blue-600">J'y vais !</a>
+		</div>
 
+		<div class="bg-cream p-8 rounded-lg max-w-md mx-auto text-center relative shadow-md">
+			<div class="bg-white rounded-lg p-4 mb-4 inline-block">
+				<p class="text-black">
+					BAO est une plateforme ludique où vous pouvez vous inscrire pour participer à des devinettes, partager des moments drôles avec d'autres utilisateurs, et bien plus encore !
+				</p>
+			</div>
+			<a href="{{ path('app_tuto') }}" class="bg-blue-500 text-white rounded-full px-6 py-3 hover:bg-blue-600 mt-4 inline-block">Commencer</a>
 		</div>
 	</div>
-
-
-</div></div>{# <script src="{{ asset('js/modal_tuto.js') }}"></script> #}{% endblock %}
+{% endblock %}
